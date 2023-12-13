@@ -11,16 +11,16 @@ char *get_hry_file(info_t *info)
 {
 	char *buf, *dir;
 
-	dir = _getenv(info, "HOME=");
+	dir = _getenviron(info, "HOME=");
 	if (!dir)
 		return (NULL);
-	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2));
+	buf = malloc(sizeof(char) * (_stringlen(dir) + _stringlen(HIST_FILE) + 2));
 	if (!buf)
 		return (NULL);
 	buf[0] = 0;
-	_strcpy(buf, dir);
-	_strcat(buf, "/");
-	_strcat(buf, HIST_FILE);
+	_stringcpy(buf, dir);
+	_stringcat(buf, "/");
+	_stringcat(buf, HIST_FILE);
 	return (buf);
 }
 
@@ -33,7 +33,7 @@ char *get_hry_file(info_t *info)
 int wte_history(info_t *info)
 {
 	ssize_t fd;
-	char *filename = get_history_file(info);
+	char *filename = get_hry_file(info);
 	list_t *node = NULL;
 
 	if (!filename)
@@ -45,10 +45,10 @@ int wte_history(info_t *info)
 		return (-1);
 	for (node = info->history; node; node = node->next)
 	{
-		_putsfd(node->str, fd);
-		_putfd('\n', fd);
+		_myputsfd(node->str, fd);
+		_myputfd('\n', fd);
 	}
-	_putfd(BUF_FLUSH, fd);
+	_myputfd(BUF_FLUSH, fd);
 	close(fd);
 	return (1);
 }
@@ -64,7 +64,7 @@ int rd_history(info_t *info)
 	int i, last = 0, linecount = 0;
 	ssize_t fd, rdlen, fsize = 0;
 	struct stat st;
-	char *buf = NULL, *filename = get_history_file(info);
+	char *buf = NULL, *filename = get_hry_file(info);
 
 	if (!filename)
 		return (0);
@@ -89,16 +89,16 @@ int rd_history(info_t *info)
 		if (buf[i] == '\n')
 		{
 			buf[i] = 0;
-			build_history_list(info, buf + last, linecount++);
+			bld_hist_list(info, buf + last, linecount++);
 			last = i + 1;
 		}
 	if (last != i)
-		build_history_list(info, buf + last, linecount++);
+		bld_hist_list(info, buf + last, linecount++);
 	free(buf);
 	info->histcount = linecount;
 	while (info->histcount-- >= HIST_MAX)
-		delete_node_at_index(&(info->history), 0);
-	renumber_history(info);
+		dlt_nd_at_index(&(info->history), 0);
+	renbr_history(info);
 	return (info->histcount);
 }
 
@@ -116,7 +116,7 @@ int bld_hist_lis(info_t *info, char *buf, int linecount)
 
 	if (info->history)
 		node = info->history;
-	add_node_end(&node, buf, linecount);
+	add_nd_end(&node, buf, linecount);
 
 	if (!info->history)
 		info->history = node;
