@@ -83,14 +83,14 @@ int rpc_alias(info_t *info)
 
 	for (i = 0; i < 10; i++)
 	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
+		node = nd_sts_with(info->alias, info->argv[0], '=');
 		if (!node)
 			return (0);
 		free(info->argv[0]);
-		p = _strchr(node->str, '=');
+		p = _stringchr(node->str, '=');
 		if (!p)
 			return (0);
-		p = _strdup(p + 1);
+		p = _stringdup(p + 1);
 		if (!p)
 			return (0);
 		info->argv[0] = p;
@@ -114,26 +114,26 @@ int rpc_vars(info_t *info)
 		if (info->argv[i][0] != '$' || !info->argv[i][1])
 			continue;
 
-		if (!_strcmp(info->argv[i], "$?"))
+		if (!_stringcmp(info->argv[i], "$?"))
 		{
 			rpc_string(&(info->argv[i]),
-				_strdup(convert_number(info->status, 10, 0)));
+				_stringdup(cvt_number(info->status, 10, 0)));
 			continue;
 		}
-		if (!_strcmp(info->argv[i], "$$"))
+		if (!_stringcmp(info->argv[i], "$$"))
 		{
 			rpc_string(&(info->argv[i]),
-				_strdup(convert_number(getpid(), 10, 0)));
+				_stringdup(cvt_number(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
+		node = nd_sts_with(info->env, &info->argv[i][1], '=');
 		if (node)
 		{
 			rpc_string(&(info->argv[i]),
-				_strdup(_strchr(node->str, '=') + 1));
+				_stringdup(_stringchr(node->str, '=') + 1));
 			continue;
 		}
-		rpc_string(&info->argv[i], _strdup(""));
+		rpc_string(&info->argv[i], _stringdup(""));
 
 	}
 	return (0);
