@@ -14,25 +14,25 @@ int hsh(info_t *info, char **av)
 
 	while (r != -1 && builtin_ret != -2)
 	{
-		clean_info(info);
-		if (interact(info))
+		clear_info(info);
+		if (interactive(info))
 			_puts("$ ");
-		_inputchar(BUF_FLUSH);
-		r = wrt_input(info);
+		_eputchar(BUF_FLUSH);
+		r = get_input(info);
 		if (r != -1)
 		{
-			set_inform(info, av);
-			builtin_ret = fn_but(info);
+			set_info(info, av);
+			builtin_ret = find_builtin(info);
 			if (builtin_ret == -1)
-				fn_com(info);
+				find_cmd(info);
 		}
-		else if (interact(info))
+		else if (interactive(info))
 			_putchar('\n');
-		free_inform(info, 0);
+		free_info(info, 0);
 	}
-	wte_history(info);
-	free_inform(info, 1);
-	if (!interact(info) && info->status)
+	write_history(info);
+	free_info(info, 1);
+	if (!interactive(info) && info->status)
 		exit(info->status);
 	if (builtin_ret == -2)
 	{
@@ -44,7 +44,7 @@ int hsh(info_t *info, char **av)
 }
 
 /**
- * fn_but - finds a builtin command
+ * find_builtin - finds a builtin command
  * @info: the parameter & return info struct
  *
  * Return: -1 if builtin not found,
@@ -52,18 +52,18 @@ int hsh(info_t *info, char **av)
  *			1 if builtin found but not successful,
  *			-2 if builtin signals exit()
  */
-int fn_but(info_t *info)
+int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", _ourexit},
-		{"env", _ourenv},
-		{"help", _ourhelp},
-		{"history", _ourhtry},
-		{"setenv", _oursetenv},
-		{"unsetenv", _ourunsetenv},
-		{"cd", _ourcd},
-		{"alias", _ouralias},
+		{"exit", _myexit},
+		{"env", _myenv},
+		{"help", _myhelp},
+		{"history", _myhistory},
+		{"setenv", _mysetenv},
+		{"unsetenv", _myunsetenv},
+		{"cd", _mycd},
+		{"alias", _myalias},
 		{NULL, NULL}
 	};
 
@@ -74,17 +74,16 @@ int fn_but(info_t *info)
 			built_in_ret = builtintbl[i].func(info);
 			break;
 		}
-
 	return (built_in_ret);
 }
 
 /**
- * fn_com - finds a command in PATH
+ * find_cmd - finds a command in PATH
  * @info: the parameter & return info struct
  *
  * Return: void
  */
-void fn_com(info_t *info)
+void find_cmd(info_t *info)
 {
 	char *path = NULL;
 	int i, k;
@@ -101,17 +100,17 @@ void fn_com(info_t *info)
 	if (!k)
 		return;
 
-	path = fn_path(info, _getenviron(info, "PATH="), info->argv[0]);
+	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
-		fr_com(info);
+		fork_cmd(info);
 	}
 	else
 	{
-		if ((interact(info) || _getenviron(info, "PATH=")
+		if ((interactive(info) || _getenv(info, "PATH=")
 			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
-			fr_com(info);
+			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
 			info->status = 127;
@@ -121,12 +120,12 @@ void fn_com(info_t *info)
 }
 
 /**
- * fr_com - forks a an exec thread to run cmd
+ * fork_cmd - forks a an exec thread to run cmd
  * @info: the parameter & return info struct
  *
  * Return: void
  */
-void fr_com(info_t *info)
+void fork_cmd(info_t *info)
 {
 	pid_t child_pid;
 
@@ -139,9 +138,9 @@ void fr_com(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argv, get_ern(info)) == -1)
+		if (execve(info->path, info->argv, get_environ(info)) == -1)
 		{
-			free_inform(info, 1);
+			free_info(info, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);

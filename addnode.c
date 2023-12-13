@@ -17,11 +17,11 @@ list_t *add_nd(list_t **head, const char *str, int num)
 	new_head = malloc(sizeof(list_t));
 	if (!new_head)
 		return (NULL);
-	_memset((void *)new_head, 0, sizeof(list_t));
+	_memoryset((void *)new_head, 0, sizeof(list_t));
 	new_head->num = num;
 	if (str)
 	{
-		new_head->str = _strdup(str);
+		new_head->str = _stringdup(str);
 		if (!new_head->str)
 		{
 			free(new_head);
@@ -52,11 +52,11 @@ list_t *add_nd_end(list_t **head, const char *str, int num)
 	new_node = malloc(sizeof(list_t));
 	if (!new_node)
 		return (NULL);
-	_memset((void *)new_node, 0, sizeof(list_t));
+	_memoryset((void *)new_node, 0, sizeof(list_t));
 	new_node->num = num;
 	if (str)
 	{
-		new_node->str = _strdup(str);
+		new_node->str = _stringdup(str);
 		if (!new_node->str)
 		{
 			free(new_node);

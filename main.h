@@ -6,8 +6,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -47,7 +47,7 @@ typedef struct mylist
 {
 	int num;
 	char *str;
-	struct liststr *next;
+	struct mylist *next;
 } list_t;
 
 /**
@@ -136,7 +136,7 @@ int _stringlen(char *);
 int _stringcmp(char *, char *);
 char *st_with(const char *, const char *);
 char *_stringcat(char *, char *);
-[O
+
 /* toem_string1.c */
 char *_stringcpy(char *, char *);
 char *_stringdup(const char *);

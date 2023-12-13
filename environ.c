@@ -26,7 +26,7 @@ char *_getenviron(info_t *info, const char *name)
 
 	while (node)
 	{
-		p = sts_with(node->str, name);
+		p = st_with(node->str, name);
 		if (p && *p)
 			return (p);
 		node = node->next;
@@ -35,7 +35,7 @@ char *_getenviron(info_t *info, const char *name)
 }
 
 /**
- * _oursetenv - Initialize a new environment variable,
+ * _mysetenv - Initialize a new environment variable,
  *             or modify an existing one
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
@@ -65,7 +65,7 @@ int  _ourunsetenv(info_t *info)
 
 	if (info->argc == 1)
 	{
-		_eputs("Too few arguements.\n");
+		_inputs("Too few arguements.\n");
 		return (1);
 	}
 	for (i = 1; i <= info->argc; i++)

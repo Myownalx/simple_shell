@@ -46,7 +46,7 @@ int wte_history(info_t *info)
 	for (node = info->history; node; node = node->next)
 	{
 		_myputsfd(node->str, fd);
-		_myputfd('\n', fd);
+		_myputsfd('\n', fd);
 	}
 	_myputfd(BUF_FLUSH, fd);
 	close(fd);

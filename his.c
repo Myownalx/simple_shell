@@ -63,13 +63,13 @@ int set_alias(info_t *info, char *str)
  *
  * Return: Always 0 on success, 1 on error
  */
-int print_alias(list_t *node)
+int print_alias(list_t *nd)
 {
 	char *p = NULL, *a = NULL;
 
-	if (node)
+	if (nd)
 	{
-		p = _stringchr(node->str, '=');
+		p = _stringchr(nd->str, '=');
 		for (a = node->str; a <= p; a++)
 			_putchar(*a);
 		_putchar('\'');
@@ -81,7 +81,7 @@ int print_alias(list_t *node)
 }
 
 /**
- * _ouralias - mimics the alias builtin (man alias)
+ * _myalias - mimics the alias builtin (man alias)
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: Always 0
