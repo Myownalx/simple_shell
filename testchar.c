@@ -36,7 +36,7 @@ int is_chn(info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
+ * chk_chn - checks we should continue chaining based on last status
  * @info: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf

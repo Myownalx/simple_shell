@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- *_eputs - prints an input string
+ *_inputs - prints an input string
  * @str: the string to be printed
  *
  * Return: Nothing
@@ -20,7 +20,7 @@ void  _inputs(char *str)
 }
 
 /**
- * _eputchar - writes the character c to stderr
+ * _inputchar - writes the character c to stderr
  * @c: The character to print
  *
  * Return: On success 1.
@@ -42,7 +42,7 @@ int  _inputchar(char c)
 }
 
 /**
- * _putfd - writes the character c to given fd
+ * _myputfd - writes the character c to given fd
  * @c: The character to print
  * @fd: The filedescriptor to write to
  *
@@ -65,7 +65,7 @@ int  _myputfd(char c, int fd)
 }
 
 /**
- *_putsfd - prints an input string
+ *_myputsfd - prints an input string
  * @str: the string to be printed
  * @fd: the filedescriptor to write to
  *

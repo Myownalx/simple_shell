@@ -1,13 +1,13 @@
 #include "main.h"
 
 /**
- * is_cmd - determines if a file is an executable command
+ * is_com - determines if a file is an executable command
  * @info: the info struct
  * @path: path to the file
  *
  * Return: 1 if true, 0 otherwise
  */
-int is_cmd(info_t *info, char *path)
+int is_com(info_t *info, char *path)
 {
 	struct stat st;
 
@@ -43,14 +43,14 @@ char *dup_chars(char *pathstr, int start, int stop)
 }
 
 /**
- * find_path - finds this cmd in the PATH string
+ * fn_path - finds this cmd in the PATH string
  * @info: the info struct
  * @pathstr: the PATH string
  * @cmd: the cmd to find
  *
  * Return: full path of cmd if found or NULL
  */
-char *find_path(info_t *info, char *pathstr, char *cmd)
+char *fn_path(info_t *info, char *pathstr, char *cmd)
 {
 	int i = 0, curr_pos = 0;
 	char *path;
@@ -59,7 +59,7 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 		return (NULL);
 	if ((_stringlen(cmd) > 2) && st_with(cmd, "./"))
 	{
-		if (is_cmd(info, cmd))
+		if (is_com(info, cmd))
 			return (cmd);
 	}
 	while (1)
@@ -74,7 +74,7 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
 				_stringcat(path, "/");
 				_stringcat(path, cmd);
 			}
-			if (is_cmd(info, path))
+			if (is_com(info, path))
 				return (path);
 			if (!pathstr[i])
 				break;

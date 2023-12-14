@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _myhistory - displays the history list, one command by line, preceded
+ * _ourhtry - displays the history list, one command by line, preceded
  *              with line numbers, starting at 0.
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
@@ -59,7 +59,7 @@ int set_alias(info_t *info, char *str)
 
 /**
  * print_alias - prints an alias string
- * @node: the alias node
+ * @nd: the alias node
  *
  * Return: Always 0 on success, 1 on error
  */
@@ -81,7 +81,7 @@ int print_alias(list_t *nd)
 }
 
 /**
- * _myalias - mimics the alias builtin (man alias)
+ * _ouralias - mimics the alias builtin (man alias)
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: Always 0

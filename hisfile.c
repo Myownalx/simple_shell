@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * get_history_file - gets the history file
+ * get_hry_file - gets the history file
  * @info: parameter struct
  *
  * Return: allocated string containg history file
@@ -25,7 +25,7 @@ char *get_hry_file(info_t *info)
 }
 
 /**
- * write_history - creates a file, or appends to an existing file
+ * wte_history - creates a file, or appends to an existing file
  * @info: the parameter struct
  *
  * Return: 1 on success, else -1
@@ -54,7 +54,7 @@ int wte_history(info_t *info)
 }
 
 /**
- * read_history - reads history from file
+ * rd_history - reads history from file
  * @info: the parameter struct
  *
  * Return: histcount on success, 0 otherwise
@@ -103,14 +103,14 @@ int rd_history(info_t *info)
 }
 
 /**
- * build_history_list - adds entry to a history linked list
+ * bld_hist_list - adds entry to a history linked list
  * @info: Structure containing potential arguments. Used to maintain
  * @buf: buffer
  * @linecount: the history linecount, histcount
  *
  * Return: Always 0
  */
-int bld_hist_lis(info_t *info, char *buf, int linecount)
+int bld_hist_list(info_t *info, char *buf, int linecount)
 {
 	list_t *node = NULL;
 
@@ -124,7 +124,7 @@ int bld_hist_lis(info_t *info, char *buf, int linecount)
 }
 
 /**
- * renumber_history - renumbers the history linked list after changes
+ * renbr_history - renumbers the history linked list after changes
  * @info: Structure containing potential arguments. Used to maintain
  *
  * Return: the new histcount
