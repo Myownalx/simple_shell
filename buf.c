@@ -110,6 +110,19 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
 }
 
 /**
+ * sigintH - blocks ctrl-C
+ * @sig_num: the signal number
+ *
+ * Return: void
+ */
+void sigintH(__attribute__((unused))int sig_num)
+{
+	_puts("\n");
+	_puts("$ ");
+	_putchar(BUF_FLUSH);
+}
+
+/**
  * _getline - gets the next line of input from STDIN
  * @info: parameter struct
  * @ptr: address of pointer to buffer, preallocated or NULL
@@ -154,17 +167,4 @@ int _getline(info_t *info, char **ptr, size_t *length)
 		*length = s;
 	*ptr = p;
 	return (s);
-}
-
-/**
- * sigintH - blocks ctrl-C
- * @sig_num: the signal number
- *
- * Return: void
- */
-void sigintH(__attribute__((unused))int sig_num)
-{
-	_puts("\n");
-	_puts("$ ");
-	_putchar(BUF_FLUSH);
 }

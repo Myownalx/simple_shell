@@ -1,6 +1,24 @@
 #include "main.h"
 
 /**
+ * prt_error - prints an error message
+ * @info: the parameter & return info struct
+ * @estr: string containing specified error type
+ * Return: 0 if no numbers in string, converted number otherwise
+ *        -1 on error
+ */
+void prt_error(info_t *info, char *estr)
+{
+	_inputs(info->fname);
+	_inputs(": ");
+	prt_d(info->line_count, STDERR_FILENO);
+	_inputs(": ");
+	_inputs(info->argv[0]);
+	_inputs(": ");
+	_inputs(estr);
+}
+
+/**
  * _erroratoi - converts a string to an integer
  * @s: the string to be converted
  * Return: 0 if no numbers in string, converted number otherwise
@@ -29,60 +47,21 @@ int  _erroratoi(char *s)
 }
 
 /**
- * prt_error - prints an error message
- * @info: the parameter & return info struct
- * @estr: string containing specified error type
- * Return: 0 if no numbers in string, converted number otherwise
- *        -1 on error
- */
-void prt_error(info_t *info, char *estr)
-{
-	_inputs(info->fname);
-	_inputs(": ");
-	prt_d(info->line_count, STDERR_FILENO);
-	_inputs(": ");
-	_inputs(info->argv[0]);
-	_inputs(": ");
-	_inputs(estr);
-}
-
-/**
- * prt_d - function prints a decimal (integer) number (base 10)
- * @input: the input
- * @fd: the filedescriptor to write to
+ * rve_com - function replaces first instance of '#' with '\0'
+ * @buf: address of the string to modify
  *
- * Return: number of characters printed
+ * Return: Always 0;
  */
-int prt_d(int input, int fd)
+void  rve_com(char *buf)
 {
-	int (*__putchar)(char) = _putchar;
-	int i, count = 0;
-	unsigned int _abs_, current;
+	int i;
 
-	if (fd == STDERR_FILENO)
-		__putchar = _inputchar;
-	if (input < 0)
-	{
-		_abs_ = -input;
-		__putchar('-');
-		count++;
-	}
-	else
-		_abs_ = input;
-	current = _abs_;
-	for (i = 1000000000; i > 1; i /= 10)
-	{
-		if (_abs_ / i)
+	for (i = 0; buf[i] != '\0'; i++)
+		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
 		{
-			__putchar('0' + current / i);
-			count++;
+			buf[i] = '\0';
+			break;
 		}
-		current %= i;
-	}
-	__putchar('0' + current);
-	count++;
-
-	return (count);
 }
 
 /**
@@ -122,19 +101,40 @@ char *cvt_number(long int num, int base, int flags)
 }
 
 /**
- * rve_com - function replaces first instance of '#' with '\0'
- * @buf: address of the string to modify
+ * prt_d - function prints a decimal (integer) number (base 10)
+ * @input: the input
+ * @fd: the filedescriptor to write to
  *
- * Return: Always 0;
+ * Return: number of characters printed
  */
-void  rve_com(char *buf)
+int prt_d(int input, int fd)
 {
-	int i;
+	int (*__putchar)(char) = _putchar;
+	int i, count = 0;
+	unsigned int _abs_, current;
 
-	for (i = 0; buf[i] != '\0'; i++)
-		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
+	if (fd == STDERR_FILENO)
+		__putchar = _inputchar;
+	if (input < 0)
+	{
+		_abs_ = -input;
+		__putchar('-');
+		count++;
+	}
+	else
+		_abs_ = input;
+	current = _abs_;
+	for (i = 1000000000; i > 1; i /= 10)
+	{
+		if (_abs_ / i)
 		{
-			buf[i] = '\0';
-			break;
+			__putchar('0' + current / i);
+			count++;
 		}
+		current %= i;
+	}
+	__putchar('0' + current);
+	count++;
+
+	return (count);
 }

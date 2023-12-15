@@ -99,137 +99,107 @@ typedef struct infopass
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
 
-/**
- *struct builtin - contains a builtin string and related function
- *@type: the builtin command flag
- *@func: the function
- */
 typedef struct agru
 {
 	char *type;
 	int (*func)(info_t *);
 } builtin_table;
 
-
-/* toem_shloop.c */
-int hsh(info_t *, char **);
-int fn_but(info_t *);
 void fn_com(info_t *);
 void fr_com(info_t *);
+int hsh(info_t *, char **);
+int fn_but(info_t *);
 
-/* toem_parser.c */
-int is_com(info_t *, char *);
 char *dpl_char(char *, int, int);
 char *fn_path(info_t *, char *, char *);
+int is_com(info_t *, char *);
 
-/* loophsh.c */
-int loopabc(char **);
-
-/* toem_errors.c */
 void _inputs(char *);
-int _inputchar(char);
+int loopabc(char **);
 int _myputfd(char c, int fd);
 int _myputsfd(char *str, int fd);
+int _inputchar(char);
 
-/* toem_string.c */
-int _stringlen(char *);
-int _stringcmp(char *, char *);
 char *st_with(const char *, const char *);
 char *_stringcat(char *, char *);
+int _stringlen(char *);
+int _stringcmp(char *, char *);
 
-/* toem_string1.c */
-char *_stringcpy(char *, char *);
-char *_stringdup(const char *);
 void _puts(char *);
 int _putchar(char);
+char *_stringcpy(char *, char *);
+char *_stringdup(const char *);
 
-/* toem_exits.c */
-char *_stringncpy(char *, char *, int);
 char *_stringncat(char *, char *, int);
 char *_stringchr(char *, char);
+char *_stringncpy(char *, char *, int);
 
-/* toem_tokenizer.c */
-char **stringtow(char *, char *);
 char **stringtow2(char *, char);
+char **stringtow(char *, char *);
 
-/* toem_realloc.c */
 char *_memoryset(char *, char, unsigned int);
 void ffree(char **);
 void *_realloc(void *, unsigned int, unsigned int);
 
-/* toem_memory.c */
-int bfree(void **);
-
-/* toem_atoi.c */
-int interact(info_t *);
-int is_dlm(char, char *);
 int _isalpha(int);
 int _atoi(char *);
+int interact(info_t *);
+int is_dlm(char, char *);
+int bfree(void **);
 
-/* toem_errors1.c */
-int _erroratoi(char *);
-void prt_error(info_t *, char *);
 int prt_d(int, int);
 char *cvt_number(long int, int, int);
 void rve_com(char *);
+int _erroratoi(char *);
+void prt_error(info_t *, char *);
 
-/* toem_builtin.c */
-int _ourexit(info_t *);
+int _ouralias(info_t *);
+int _ourhtry(info_t *);
+
 int _ourcd(info_t *);
 int _ourhelp(info_t *);
+int _ourexit(info_t *);
 
-/* toem_builtin1.c */
-int _ourhtry(info_t *);
-int _ouralias(info_t *);
-
-/*toem_getline.c */
-ssize_t wrt_input(info_t *);
-int _getline(info_t *, char **, size_t *);
-void sigintH(int);
-
-/* toem_getinfo.c */
-void clean_info(info_t *);
 void set_inform(info_t *, char **);
 void free_inform(info_t *, int);
+ssize_t wrt_input(info_t *);
+int _getline(info_t *, char **, size_t *);
+ssize_t wrt_input(info_t *);
+void clean_info(info_t *);
+void sigintH(int);
 
-/* toem_environ.c */
+int _ourunsetenv(info_t *);
+int ppt_envirn_list(info_t *);
 char *_getenviron(info_t *, const char *);
 int _ourenv(info_t *);
 int _oursetenv(info_t *);
-int _ourunsetenv(info_t *);
-int ppt_envirn_list(info_t *);
 
-
-char **get_ern(info_t *);
 int _unsetenvir(info_t *, char *);
 int _setenviron(info_t *, char *, char *);
+char **get_ern(info_t *);
 
-
-char *get_hry_file(info_t *info);
-int wte_history(info_t *info);
 int rd_history(info_t *info);
 int bld_hist_list(info_t *info, char *buf, int linecount);
 int renbr_history(info_t *info);
+char *get_hry_file(info_t *info);
+int wte_history(info_t *info);
 
-
-list_t *add_nd(list_t **, const char *, int);
-list_t *add_nd_end(list_t **, const char *, int);
 size_t prt_list_string(const list_t *);
 int dlt_nd_at_index(list_t **, unsigned int);
 void free_lists(list_t **);
+list_t *add_nd(list_t **, const char *, int);
+list_t *add_nd_end(list_t **, const char *, int);
 
-
-size_t list_length(const list_t *);
-char **list_to_strgs(list_t *);
 size_t prt_list(const list_t *);
 list_t *nd_sts_with(list_t *, char *, char);
 ssize_t get_nd_idx(list_t *, list_t *);
+size_t list_length(const list_t *);
+char **list_to_strgs(list_t *);
 
-
-int is_chn(info_t *, char *, size_t *);
-void chk_chn(info_t *, char *, size_t *, size_t, size_t);
 int rpc_alias(info_t *);
 int rpc_vars(info_t *);
 int rpc_string(char **, char *);
+void chk_chn(info_t *, char *, size_t *, size_t, size_t);
+int is_chn(info_t *, char *, size_t *);
 
 #endif

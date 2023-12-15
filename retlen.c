@@ -1,24 +1,6 @@
 #include "main.h"
 
 /**
- * _stringlen - returns the length of a string
- * @s: the string whose length to check
- *
- * Return: integer length of string
- */
-int _stringlen(char *s)
-{
-	int i = 0;
-
-	if (!s)
-		return (0);
-
-	while (*s++)
-		i++;
-	return (i);
-}
-
-/**
  * _stringcmp - performs lexicogarphic comparison of two strangs.
  * @s1: the first strang
  * @s2: the second strang
@@ -41,21 +23,6 @@ int _stringcmp(char *s1, char *s2)
 }
 
 /**
- * st_with - checks if needle starts with haystack
- * @haystack: string to search
- * @needle: the substring to find
- *
- * Return: address of next char of haystack or NULL
- */
-char *st_with(const char *haystack, const char *needle)
-{
-	while (*needle)
-		if (*needle++ != *haystack++)
-			return (NULL);
-	return ((char *)haystack);
-}
-
-/**
  * _stringcat - concatenates two strings
  * @dest: the destination buffer
  * @src: the source buffer
@@ -72,4 +39,37 @@ char *_stringcat(char *dest, char *src)
 		*dest++ = *src++;
 	*dest = *src;
 	return (ret);
+}
+
+/**
+ * _stringlen - returns the length of a string
+ * @s: the string whose length to check
+ *
+ * Return: integer length of string
+ */
+int _stringlen(char *s)
+{
+	int i = 0;
+
+	if (!s)
+		return (0);
+
+	while (*s++)
+		i++;
+	return (i);
+}
+
+/**
+ * st_with - checks if needle starts with haystack
+ * @haystack: string to search
+ * @needle: the substring to find
+ *
+ * Return: address of next char of haystack or NULL
+ */
+char *st_with(const char *haystack, const char *needle)
+{
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (NULL);
+	return ((char *)haystack);
 }

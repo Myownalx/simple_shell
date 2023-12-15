@@ -1,30 +1,6 @@
 #include "main.h"
 
 /**
- * get_hry_file - gets the history file
- * @info: parameter struct
- *
- * Return: allocated string containg history file
- */
-
-char *get_hry_file(info_t *info)
-{
-	char *buf, *dir;
-
-	dir = _getenviron(info, "HOME=");
-	if (!dir)
-		return (NULL);
-	buf = malloc(sizeof(char) * (_stringlen(dir) + _stringlen(HIST_FILE) + 2));
-	if (!buf)
-		return (NULL);
-	buf[0] = 0;
-	_stringcpy(buf, dir);
-	_stringcat(buf, "/");
-	_stringcat(buf, HIST_FILE);
-	return (buf);
-}
-
-/**
  * wte_history - creates a file, or appends to an existing file
  * @info: the parameter struct
  *
@@ -51,6 +27,51 @@ int wte_history(info_t *info)
 	_myputfd(BUF_FLUSH, fd);
 	close(fd);
 	return (1);
+}
+
+/**
+ * bld_hist_list - adds entry to a history linked list
+ * @info: Structure containing potential arguments. Used to maintain
+ * @buf: buffer
+ * @linecount: the history linecount, histcount
+ *
+ * Return: Always 0
+ */
+int bld_hist_list(info_t *info, char *buf, int linecount)
+{
+	list_t *node = NULL;
+
+	if (info->history)
+		node = info->history;
+	add_nd_end(&node, buf, linecount);
+
+	if (!info->history)
+		info->history = node;
+	return (0);
+}
+
+/**
+ * get_hry_file - gets the history file
+ * @info: parameter struct
+ *
+ * Return: allocated string containg history file
+ */
+
+char *get_hry_file(info_t *info)
+{
+	char *buf, *dir;
+
+	dir = _getenviron(info, "HOME=");
+	if (!dir)
+		return (NULL);
+	buf = malloc(sizeof(char) * (_stringlen(dir) + _stringlen(HIST_FILE) + 2));
+	if (!buf)
+		return (NULL);
+	buf[0] = 0;
+	_stringcpy(buf, dir);
+	_stringcat(buf, "/");
+	_stringcat(buf, HIST_FILE);
+	return (buf);
 }
 
 /**
@@ -100,27 +121,6 @@ int rd_history(info_t *info)
 		dlt_nd_at_index(&(info->history), 0);
 	renbr_history(info);
 	return (info->histcount);
-}
-
-/**
- * bld_hist_list - adds entry to a history linked list
- * @info: Structure containing potential arguments. Used to maintain
- * @buf: buffer
- * @linecount: the history linecount, histcount
- *
- * Return: Always 0
- */
-int bld_hist_list(info_t *info, char *buf, int linecount)
-{
-	list_t *node = NULL;
-
-	if (info->history)
-		node = info->history;
-	add_nd_end(&node, buf, linecount);
-
-	if (!info->history)
-		info->history = node;
-	return (0);
 }
 
 /**

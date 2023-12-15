@@ -1,25 +1,6 @@
 #include "main.h"
 
 /**
- * list_length - determines length of a linked list
- * @h: pointer to first node
- *
- * Return: size of list
- */
-
-size_t list_length(const list_t *h)
-{
-	size_t i = 0;
-
-	while (h)
-	{
-		h = h->next;
-		i++;
-	}
-	return (i);
-}
-
-/**
  * list_to_strgs - returns an array of strings of the list->str
  * @head: pointer to first node
  *
@@ -55,6 +36,46 @@ char **list_to_strgs(list_t *head)
 	return (strs);
 }
 
+/**
+ * nd_sts_with - returns node whose string starts with prefix
+ * @node: pointer to list head
+ * @prefix: string to match
+ * @c: the next character after prefix to match
+ *
+ * Return: match node or null
+ */
+list_t *nd_sts_with(list_t *node, char *prefix, char c)
+{
+	char *p = NULL;
+
+	while (node)
+	{
+		p = st_with(node->str, prefix);
+		if (p && ((c == -1) || (*p == c)))
+			return (node);
+		node = node->next;
+	}
+	return (NULL);
+}
+
+/**
+ * list_length - determines length of a linked list
+ * @h: pointer to first node
+ *
+ * Return: size of list
+ */
+
+size_t list_length(const list_t *h)
+{
+	size_t i = 0;
+
+	while (h)
+	{
+		h = h->next;
+		i++;
+	}
+	return (i);
+}
 
 /**
  * prt_list - prints all elements of a list_t linked list
@@ -77,28 +98,6 @@ size_t prt_list(const list_t *h)
 		i++;
 	}
 	return (i);
-}
-
-/**
- * nd_sts_with - returns node whose string starts with prefix
- * @node: pointer to list head
- * @prefix: string to match
- * @c: the next character after prefix to match
- *
- * Return: match node or null
- */
-list_t *nd_sts_with(list_t *node, char *prefix, char c)
-{
-	char *p = NULL;
-
-	while (node)
-	{
-		p = st_with(node->str, prefix);
-		if (p && ((c == -1) || (*p == c)))
-			return (node);
-		node = node->next;
-	}
-	return (NULL);
 }
 
 /**

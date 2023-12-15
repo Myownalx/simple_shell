@@ -1,35 +1,6 @@
 #include "main.h"
 
 /**
- * _ourexit - exits the shell
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- *  Return: exits with a given exit status
- *         (0) if info.argv[0] != "exit"
- */
-int  _ourexit(info_t *info)
-{
-	int exitcheck;
-
-	if (info->argv[1])  /* If there is an exit arguement */
-	{
-		exitcheck = _erroratoi(info->argv[1]);
-		if (exitcheck == -1)
-		{
-			info->status = 2;
-			prt_error(info, "Illegal number: ");
-			_puts(info->argv[1]);
-			_putchar('\n');
-			return (1);
-		}
-		info->err_num = _erroratoi(info->argv[1]);
-		return (-2);
-	}
-	info->err_num = -1;
-	return (-2);
-}
-
-/**
  * _ourcd - changes the current directory of the process
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
@@ -77,6 +48,35 @@ int  _ourcd(info_t *info)
 		_setenviron(info, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
+}
+
+/**
+ * _ourexit - exits the shell
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ *  Return: exits with a given exit status
+ *         (0) if info.argv[0] != "exit"
+ */
+int  _ourexit(info_t *info)
+{
+	int exitcheck;
+
+	if (info->argv[1])  /* If there is an exit arguement */
+	{
+		exitcheck = _erroratoi(info->argv[1]);
+		if (exitcheck == -1)
+		{
+			info->status = 2;
+			prt_error(info, "Illegal number: ");
+			_puts(info->argv[1]);
+			_putchar('\n');
+			return (1);
+		}
+		info->err_num = _erroratoi(info->argv[1]);
+		return (-2);
+	}
+	info->err_num = -1;
+	return (-2);
 }
 
 /**

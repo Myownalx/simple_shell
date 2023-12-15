@@ -1,6 +1,21 @@
 #include "main.h"
 
 /**
+ * ffree - frees a string of strings
+ * @pp: string of strings
+ */
+void ffree(char **pp)
+{
+	char **a = pp;
+
+	if (!pp)
+		return;
+	while (*pp)
+		free(*pp++);
+	free(a);
+}
+
+/**
  **_memoryset - fills memory with a constant byte
  *@s: the pointer to the memory area
  *@b: the byte to fill *s with
@@ -14,21 +29,6 @@ char *_memoryset(char *s, char b, unsigned int n)
 	for (i = 0; i < n; i++)
 		s[i] = b;
 	return (s);
-}
-
-/**
- * ffree - frees a string of strings
- * @pp: string of strings
- */
-void ffree(char **pp)
-{
-	char **a = pp;
-
-	if (!pp)
-		return;
-	while (*pp)
-		free(*pp++);
-	free(a);
 }
 
 /**

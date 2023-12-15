@@ -1,39 +1,6 @@
 #include "main.h"
 
 /**
- * add_nd - adds a node to the start of the list
- * @head: address of pointer to head node
- * @str: str field of node
- * @num: node index used by history
- *
- * Return: size of list
- */
-list_t *add_nd(list_t **head, const char *str, int num)
-{
-	list_t *new_head;
-
-	if (!head)
-		return (NULL);
-	new_head = malloc(sizeof(list_t));
-	if (!new_head)
-		return (NULL);
-	_memoryset((void *)new_head, 0, sizeof(list_t));
-	new_head->num = num;
-	if (str)
-	{
-		new_head->str = _stringdup(str);
-		if (!new_head->str)
-		{
-			free(new_head);
-			return (NULL);
-		}
-	}
-	new_head->next = *head;
-	*head = new_head;
-	return (new_head);
-}
-
-/**
  * add_nd_end - adds a node to the end of the list
  * @head: address of pointer to head node
  * @str: str field of node
@@ -75,25 +42,37 @@ list_t *add_nd_end(list_t **head, const char *str, int num)
 }
 
 /**
- * prt_list_string - prints only the str element of a list_t linked list
- * @h: pointer to first node
+ * add_nd - adds a node to the start of the list
+ * @head: address of pointer to head node
+ * @str: str field of node
+ * @num: node index used by history
  *
  * Return: size of list
  */
-size_t prt_list_string(const list_t *h)
+list_t *add_nd(list_t **head, const char *str, int num)
 {
-	size_t i = 0;
+	list_t *new_head;
 
-	while (h)
+	if (!head)
+		return (NULL);
+	new_head = malloc(sizeof(list_t));
+	if (!new_head)
+		return (NULL);
+	_memoryset((void *)new_head, 0, sizeof(list_t));
+	new_head->num = num;
+	if (str)
 	{
-		_puts(h->str ? h->str : "(nil)");
-		_puts("\n");
-		h = h->next;
-		i++;
+		new_head->str = _stringdup(str);
+		if (!new_head->str)
+		{
+			free(new_head);
+			return (NULL);
+		}
 	}
-	return (i);
+	new_head->next = *head;
+	*head = new_head;
+	return (new_head);
 }
-
 /**
  * dlt_nd_at_index - deletes node at given index
  * @head: address of pointer to first node
@@ -101,6 +80,7 @@ size_t prt_list_string(const list_t *h)
  *
  * Return: 1 on success, 0 on failure
  */
+
 int dlt_nd_at_index(list_t **head, unsigned int index)
 {
 	list_t *node, *prev_node;
@@ -132,6 +112,26 @@ int dlt_nd_at_index(list_t **head, unsigned int index)
 		node = node->next;
 	}
 	return (0);
+}
+
+/**
+ * prt_list_string - prints only the str element of a list_t linked list
+ * @h: pointer to first node
+ *
+ * Return: size of list
+ */
+size_t prt_list_string(const list_t *h)
+{
+	size_t i = 0;
+
+	while (h)
+	{
+		_puts(h->str ? h->str : "(nil)");
+		_puts("\n");
+		h = h->next;
+		i++;
+	}
+	return (i);
 }
 
 /**

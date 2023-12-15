@@ -1,23 +1,6 @@
 #include "main.h"
 
 /**
- * get_ern - returns the string array copy of our environ
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- * Return: Always 0
- */
-char **get_ern(info_t *info)
-{
-	if (!info->environ || info->env_changed)
-	{
-		info->environ = list_to_strgs(info->env);
-		info->env_changed = 0;
-	}
-
-	return (info->environ);
-}
-
-/**
  * _unsetenvir - Remove an environment variable
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
@@ -47,6 +30,23 @@ int _unsetenvir(info_t *info, char *var)
 		i++;
 	}
 	return (info->env_changed);
+}
+
+/**
+ * get_ern - returns the string array copy of our environ
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ * Return: Always 0
+ */
+char **get_ern(info_t *info)
+{
+	if (!info->environ || info->env_changed)
+	{
+		info->environ = list_to_strgs(info->env);
+		info->env_changed = 0;
+	}
+
+	return (info->environ);
 }
 
 /**

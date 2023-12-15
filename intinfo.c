@@ -1,18 +1,6 @@
 #include "main.h"
 
 /**
- * clean_info - initializes info_t struct
- * @info: struct address
- */
-void clean_info(info_t *info)
-{
-	info->arg = NULL;
-	info->argv = NULL;
-	info->path = NULL;
-	info->argc = 0;
-}
-
-/**
  * set_inform - initializes info_t struct
  * @info: struct address
  * @av: argument vector
@@ -42,6 +30,18 @@ void set_inform(info_t *info, char **av)
 		rpc_alias(info);
 		rpc_vars(info);
 	}
+}
+
+/**
+ * clean_info - initializes info_t struct
+ * @info: struct address
+ */
+void clean_info(info_t *info)
+{
+	info->arg = NULL;
+	info->argv = NULL;
+	info->path = NULL;
+	info->argc = 0;
 }
 
 /**

@@ -1,17 +1,6 @@
 #include "main.h"
 
 /**
- * interact - returns true if shell is in interactive mode
- * @info: structure address
- *
- * Return: 1 if interactive mode, else 0
- */
-int interact(info_t *info)
-{
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
-}
-
-/**
  *  is_dlm - checks if character is a delimeter
  * @c: the char to check
  * @delim: the delimeter string
@@ -26,17 +15,14 @@ int  is_dlm(char c, char *delim)
 }
 
 /**
- *_isalpha - checks for alphabetic character
- *@c: The character to input
- *Return: 1 if c is alphabetic, 0 otherwise
+ * interact - returns true if shell is in interactive mode
+ * @info: structure address
+ *
+ * Return: 1 if interactive mode, else 0
  */
-
-int _isalpha(int c)
+int interact(info_t *info)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	else
-		return (0);
+	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
@@ -71,4 +57,18 @@ int _atoi(char *s)
 		output = result;
 
 	return (output);
+}
+
+/**
+ *_isalpha - checks for alphabetic character
+ *@c: The character to input
+ *Return: 1 if c is alphabetic, 0 otherwise
+ */
+
+int _isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else
+		return (0);
 }
